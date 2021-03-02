@@ -1,13 +1,19 @@
 <template>
   <div>
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Montserrat&display=swap" rel="stylesheet"> -->
+    <div class="bg-gray-300 w-full h-16 sticky top-0"></div>
     <Nuxt />
   </div>
 </template>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Montserrat&display=swap');
+</style>
+
+<style>
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -23,6 +29,9 @@ html {
   box-sizing: border-box;
   margin: 0;
 }
+
+/* font-family: 'Lora', serif;
+ */
 
 .button--green {
   display: inline-block;
