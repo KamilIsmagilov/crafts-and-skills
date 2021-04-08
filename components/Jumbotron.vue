@@ -6,15 +6,7 @@
       <span class="text-orange-500">Skills</span>
     </div>
     <div class="flex justify-between">
-      <div>
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/H1cq99MGHbY"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
+      <div class="bg-gray-300 w-2/4 h-100">
       </div>
       <div class="pl-6">
         <div class="text-base">
@@ -24,45 +16,64 @@
           I want to make the studying of all skills free and accessible for all
           people around the world
         </div>
-        <JumbotronGoldenSponsor v-if="goldenSponsor" :sponsor="goldenSponsor" />
+        <JumbotronSponsorsGolden :sponsors="goldenSponsors" />
       </div>
     </div>
-    <JumbotronArgentumSponsors
-      v-if="silverSponsors"
-      :sponsors="silverSponsors"
-    />
-    <JumbotronBronzeSponsors v-if="bronzeSponsors" :sponsors="bronzeSponsors" />
+    <JumbotronSponsorsSilver :sponsors="silverSponsors" />
+    <JumbotronSponsorsBronze :sponsors="bronzeSponsors" />
   </div>
 </template>
 
 <script>
-// const firebase = require("firebase")
 import firebase from 'firebase'
 import firebaseConfig from '../firebase.config'
-import JumbotronGoldenSponsor from '~/components/JumbotronGoldenSponsor'
-import JumbotronArgentumSponsors from '~/components/JumbotronArgentumSponsors'
-import JumbotronBronzeSponsors from '~/components/JumbotronBronzeSponsors'
+
+import JumbotronSponsorsGolden from '~/components/JumbotronSponsorsGolden'
+import JumbotronSponsorsSilver from '~/components/JumbotronSponsorsSilver'
+import JumbotronSponsorsBronze from '~/components/JumbotronSponsorsBronze'
 
 // Initialize Cloud Firestore through Firebase
-firebase.initializeApp(firebaseConfig)
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig)
+}
 
 const db = firebase.firestore()
 
 export default {
   components: {
-    JumbotronGoldenSponsor,
-    JumbotronArgentumSponsors,
-    JumbotronBronzeSponsors,
+    JumbotronSponsorsGolden,
+    JumbotronSponsorsSilver,
+    JumbotronSponsorsBronze
   },
-  created() {
+  data () {
+    return {
+      allSponsors: []
+    }
+  },
+  computed: {
+    goldenSponsors () {
+      return this.filterSponsorsByType('golden')
+    },
+    silverSponsors () {
+      return this.filterSponsorsByType('silver')
+    },
+    bronzeSponsors () {
+      return this.filterSponsorsByType('bronze')
+    }
+  },
+  created () {
     db.collection('sponsors')
+      .where('isActive', '==', true)
       .get()
       .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(`${doc.id} => ${JSON.stringify(doc.data())}`)
-        })
+        this.allSponsors = querySnapshot.docs.map(doc => doc.data())
       })
   },
+  methods: {
+    filterSponsorsByType (type) {
+      return this.allSponsors.filter(sponsor => sponsor.type === type)
+    }
+  }
 }
 </script>
 

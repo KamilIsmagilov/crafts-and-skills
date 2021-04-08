@@ -1,4 +1,6 @@
 export default {
+  mode: 'universal',
+  devtools: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'my-skills',
@@ -17,7 +19,14 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    {
+      src: '~/plugins/firebaseUI.js',
+      mode: 'client',
+      ssr: false
+    }
+  ],
+
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -25,7 +34,7 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
+    // '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
   ],
@@ -34,5 +43,13 @@ export default {
   modules: [],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    vendor: ['firebaseUI']
+  },
+  vue: {
+    config: {
+      productionTip: false,
+      devtools: true
+    }
+  }
 }

@@ -2,10 +2,33 @@
   <div>
     <!-- <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Montserrat&display=swap" rel="stylesheet"> -->
-    <div class="bg-gray-300 w-full h-16 sticky top-0"></div>
+    <div class="bg-gray-300 w-full h-16">
+      <div class="text-base" @click="openAuthModal">SignIn/SignUp</div>
+    </div>
+    <AuthPopup :value="isShowAuthModal" />
     <Nuxt />
   </div>
 </template>
+
+<script>
+import AuthPopup from '~/components/AuthPopup'
+
+export default {
+  components: {
+    AuthPopup
+  },
+  data () {
+    return {
+      isShowAuthModal: false
+    }
+  },
+  methods: {
+    openAuthModal () {
+      this.isShowAuthModal = true
+    }
+  }
+}
+</script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Montserrat&display=swap');
